@@ -1,8 +1,6 @@
 title: MSPMesh Wiki
-theme: just-the-docs
 remote_theme: just-the-docs/just-the-docs
 color_scheme: light
-logo: 
 search_enabled: true
 aux_links:
   GitHub: https://github.com/MSPMesh/MSPMesh.github.io
