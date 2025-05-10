@@ -9,7 +9,7 @@ has_children: true
 [Yeti Wurks Base Station](yeti_wurks_base_station.md)  
 [RAK Wireless Starter Kit](rak_wireless_starter_kit.md)
 ## Antennas
-The dBi ratings on an antennas mean how much signal strength they have compared to an omnidirectional antenna (one that broadcasts in all directions). So if you find a 20 dBi antenna that means that it is probably highly directional, not that it magically transmits at a higher strength than any other one. What this generally means is that the signal is focused in a "lighthouse" pattern around the antenna.   
+The dBi rating on an antenna means how much signal strength it has compared to an omnidirectional antenna (one that broadcasts in all directions). So if you find a 20 dBi antenna that means that it is probably highly directional, not that it magically transmits at a higher strength than any other one. What this generally means is that the signal is focused in a "lighthouse" pattern around the antenna.   
 
 * We like [Rokland](https://store.rokland.com/collections/all-helium-antennnas) antennas.   
     * [10 dBi 45"](https://store.rokland.com/collections/802-11ah-wi-fi-halow/products/10-dbi-backcountry-n-male-omni-outdoor-helium-915-mhz-antenna-48-for-rak-miner-2-nebra-indoor-bobcat-hotspots) for rural use which maximizes range for long-distance comms.  
