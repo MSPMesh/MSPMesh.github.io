@@ -6,7 +6,7 @@ parent: Experiments
 > &mdash; <cite>Brew Swillis</cite>  
   
 ## Antennas
-Got a big improvement in RX with a random Cradlepoint cellular antenna over the stock T-Echo antenna.[^pizzaboy192]  
+Got a big improvement in RX with a random [Cradlepoint cellular antenna](https://cradlepoint.com/product/antenna/cellular-antenna-600-mhz-6-ghz-sma-wht-145mm/) over the stock T-Echo antenna. Turns out 4G bands (600MHz - 6GHz) overlap the LoRa band (915MHz).[^pizzaboy192]  
   
 ## Sources
 [^pizzaboy192]: Information gathered from pizzaboy192 on the MSPMesh Discord server.
