@@ -24,6 +24,8 @@ The dBi rating on an antenna means how much signal strength it has compared to a
     * Also they all come with a sticker on the base which clearly indicates that this antenna is not garbage.
 
 ## Enclosures 
+[The RAK150 enclosure](https://store.rakwireless.com/products/unify-enclosure-ip67-150x100x45mm-with-pre-mounted-m8-5-pin-and-rp-sma-antenna-ip-rated-connectors?srsltid=AfmBOoodP5dLDXx5aujNSiBeKiIlMzHON_EkEE8GQXg_MwRzXwj45iBU&variant=42861623738566) is great and can be ordered with an antenna mount and solar panel already attached.   
+[The "RAK150 at home" enclosure](https://www.amazon.com/dp/B09N419581) A simple enclosure that doesn't have the bells and whistles of the RAK150 but it's much cheaper!
 ## Solar Panels  
 [Ecowatt 25W Solar Panels](https://www.amazon.com/dp/B00PFGP0EA). Budget-friendly, includes mounting hardware, controller, and cabling. A great choice for large nodes, ensuring consistent power with minimal maintenance.
 ## Misc
