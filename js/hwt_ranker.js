@@ -6,6 +6,10 @@ document.getElementById('kmzInputRank').addEventListener('change', function (eve
     const files = Array.from(event.target.files);
     if (!files.length) return;
 
+
+    const spinner = document.getElementById('rankSpinner');
+    if (spinner) spinner.style.display = '';
+
     const areaPerPixel = (1.5625 / 1000.0) / 2.0;
     const results = [];
     let processed = 0;
@@ -52,7 +56,7 @@ document.getElementById('kmzInputRank').addEventListener('change', function (eve
                     URL.revokeObjectURL(url);
                 }
                 const area = totalOpaque * areaPerPixel;
-                results.push({ filename: file.name, pixels: totalOpaque, area });
+                results.push({ filename: file.name, area });
                 checkDone();
             }, function (err) {
                 console.error('Error reading KMZ as zip:', err);
@@ -65,22 +69,19 @@ document.getElementById('kmzInputRank').addEventListener('change', function (eve
     function checkDone() {
         processed++;
         if (processed === files.length) {
-            results.sort((a, b) => b.pixels - a.pixels);
+            results.sort((a, b) => b.area - a.area);
 
-            let csv = "file name,pixels,area\n";
+            const table = document.getElementById('rankResultsTable');
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
             results.forEach(r => {
-                csv += `${r.filename},${r.pixels},${r.area}\n`;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${r.filename}</td><td>${r.area.toFixed(2)}</td>`;
+                tbody.appendChild(tr);
             });
+            table.style.display = results.length ? '' : 'none';
 
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'results.csv';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            if (spinner) spinner.style.display = 'none';
         }
     }
 });

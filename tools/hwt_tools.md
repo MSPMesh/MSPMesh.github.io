@@ -2,25 +2,83 @@
 title: HeyWhatsThat Tools
 parent: Tools
 ---
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #0078d4;
+  border-radius: 50%;
+  vertical-align: middle;
+  animation: spin 1s linear infinite;
+}
+</style>
+
+
+## Coverage Merger
+This will merge node coverage into a single KMZ file and strip out any identifying information. It will also change the color of the coverage depending on the number of nodes that overlap any given point.   
+
+| Color  | Number of nodes |
+|--------|-----------------|
+| Red    | 1 node          |
+| Yellow | 2 nodes         |
+| Green  | 3+ nodes        |  
+
+
+<input type="file" id="kmzInputMerge" accept=".kmz" multiple style="display:none" />
+<button id="mergeBtn">Select KMZ File(s) for Merging</button>
+<!-- Spinner for coverage merger -->
+<div id="mergeSpinner" style="display:none; align-items:center; gap:0.5em; margin-top:0.5em;">
+  <span class="spinner"></span>
+  Processing...
+</div>
+
+## KMZ Identifying Information Stripper
+This tool will strip out identifying information from any number of KMZ files and only leave the coverage for each. Note: This will download each of the KMZ files separately, so if you select 10 files, you will get 10 downloads. This may cause your browser to block the downloads and require you to allow them.   
+
+<input type="file" id="kmzInputStrip" accept=".kmz" multiple style="display:none" />
+<button id="stripBtn">Select KMZ File(s) for Stripping</button>
+<!-- Spinner for stripper -->
+<div id="stripSpinner" style="display:none; align-items:center; gap:0.5em; margin-top:0.5em;">
+  <span class="spinner"></span>
+  Processing...
+</div>
+
+
 
 ## Coverage Ranker
+This tool will rank each node by how much coverage it has. Select some number of kmz files, and it will display a table of the files and their coverage.   
 
 <input type="file" id="kmzInputRank" accept=".kmz" multiple style="display:none" />
 <button id="rankBtn">Select KMZ File(s) for Ranking</button>
 
+<!-- Add a table for displaying results -->
+<div id="rankSpinner" style="display:none; align-items:center; gap:0.5em;">
+  <span class="spinner"></span>
+  Processing...
+</div>
+<table id="rankResultsTable" border="1" style="margin-top:1em; display:none;">
+  <thead>
+    <tr>
+      <th>File Name</th>
+      <th>Area (Square Miles)</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
 
-This will rank each node by how much coverage it has.
-
-## Coverage Merger
-<input type="file" id="kmzInputMerge" accept=".kmz" multiple style="display:none" />
-<button id="mergeBtn">Select KMZ File(s) for Merging</button>
-
-This will merge node coverage
 
 
+
+<!-- This needs to stay at the bottom of the page -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/photopea/UPNG.js/UPNG.js"></script>
-<script>
-{% include js/hwt_ranker.js %}
-{% include js/hwt_merger.js %}
-</script>
+<script src="/js/hwt_merger.js"></script>
+<script src="/js/hwt_ranker.js"></script>
+<script src="/js/hwt_stripper.js"></script>
