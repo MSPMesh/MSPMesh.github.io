@@ -10,7 +10,7 @@ document.getElementById('kmzInputRank').addEventListener('change', function (eve
     const spinner = document.getElementById('rankSpinner');
     if (spinner) spinner.style.display = '';
 
-    const areaPerPixel = (1.5625 / 1000.0) / 2.0;
+    const areaPerPixel = 23.1661 / (100.0 * 100.0);
     const results = [];
     let processed = 0;
 

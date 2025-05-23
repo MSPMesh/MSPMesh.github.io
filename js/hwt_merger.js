@@ -35,6 +35,7 @@ document.getElementById('kmzInputMerge').addEventListener('change', async functi
         }
 
         const cloakpDict = {};
+        const viewerDict = {}; // NEW: name -> coordinates
         const pattern = /^cloakp.*\.png$/i;
 
         for (const file of files) {
@@ -43,6 +44,25 @@ document.getElementById('kmzInputMerge').addEventListener('change', async functi
             const zip = await JSZip.loadAsync(arrayBuffer);
 
             if (zip.file("DO_NOT_USE_AS_INPUT.flag")) continue;
+
+            // Find the KML file (usually ends with .kml)
+            const kmlEntry = Object.keys(zip.files).find(n => n.toLowerCase().endsWith('.kml'));
+            if (kmlEntry) {
+                const kmlText = await zip.files[kmlEntry].async('text');
+                // Parse XML
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(kmlText, "application/xml");
+                // Find Placemark with <Snippet>position of viewer</Snippet>
+                const placemarks = xmlDoc.getElementsByTagName('Placemark');
+                for (const pm of placemarks) {
+                    const snippet = pm.getElementsByTagName('Snippet')[0];
+                    if (snippet && snippet.textContent.includes('position of viewer')) {
+                        const name = pm.getElementsByTagName('name')[0]?.textContent?.trim();
+                        const coords = pm.getElementsByTagName('coordinates')[0]?.textContent?.trim();
+                        if (name && coords) viewerDict[name] = coords;
+                    }
+                }
+            }
 
             for (const name of Object.keys(zip.files)) {
                 if (pattern.test(name.split('/').pop())) {
@@ -132,24 +152,76 @@ document.getElementById('kmzInputMerge').addEventListener('change', async functi
 </GroundOverlay>`;
         }
 
-        const xmlTemplate = `<?xml version="1.0" encoding="UTF-8"?>
+        function generateNodePositionXML(name, coordinates) {
+            const nodePositionXMLTemplate = `<Placemark>
+<name>!!!NAME!!!</name>
+<Point>
+    <altitudeMode>relativeToGround</altitudeMode>
+    <coordinates>!!!COORDINATES!!!</coordinates>
+</Point>
+</Placemark>
+`;
+            return nodePositionXMLTemplate
+                .replace("!!!NAME!!!", name)
+                .replace("!!!COORDINATES!!!", coordinates);
+        }
+
+        const strippedXMLTemplate = `<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.1">
 
 <Document id="CombinedMap">
-  <name>CombinedMap</name>
-  <visibility>1</visibility>
-  <open>0</open>
+    <name>Combined Map</name>
+    <visibility>1</visibility>
+    <open>0</open>
+    <Folder>
+        <name>Visibility cloak</name>
+        <styleUrl>#cloakFolderStyle</styleUrl>
+        <visibility>1</visibility>
+        <open>0</open>
 !!!GROUND_OVERLAYS!!!
+    </Folder>
+</Document>
+</kml>
+`;
+
+        const positionXMLTemplate = `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.1">
+
+<Document id="CombinedMap">
+    <name>Combined Map</name>
+    <visibility>1</visibility>
+    <open>0</open>
+    <Folder>
+        <name>Visibility cloak</name>
+        <visibility>1</visibility>
+        <open>0</open>
+!!!GROUND_OVERLAYS!!!
+    </Folder>
+    <Folder>
+        <name>Node Positions</name>
+        <visibility>1</visibility>
+        <open>0</open>
+!!!NODE_POSITIONS!!!
+    </Folder>
 </Document>
 </kml>
 `;
 
         const overlapImages = await generateOverlapImages(cloakpDict);
         const overlayXMLs = Object.keys(overlapImages).map(generateGroundOverlayXML);
-        const kmlOutput = xmlTemplate.replace("!!!GROUND_OVERLAYS!!!", overlayXMLs.join('\n'));
+        const strippedKMLOutput = strippedXMLTemplate.replace("!!!GROUND_OVERLAYS!!!", overlayXMLs.join('\n'));
 
+        // --- NEW: Generate node position XMLs and KMZ ---
+        const nodePositionXMLs = Object.entries(viewerDict).map(
+            ([name, coords]) => generateNodePositionXML(name, coords)
+        );
+        const positionsKMLOutput = positionXMLTemplate
+            .replace("!!!GROUND_OVERLAYS!!!", overlayXMLs.join('\n'))
+            .replace("!!!NODE_POSITIONS!!!", nodePositionXMLs.join('\n'));
+
+        // --- Output CombinedSanitized.kmz as before ---
         const outZip = new JSZip();
-        outZip.file("combined.kml", kmlOutput);
+        outZip.file("combined.kml", strippedKMLOutput);
         for (const [imgName, blob] of Object.entries(overlapImages)) {
             outZip.file(imgName, blob);
         }
@@ -159,11 +231,29 @@ document.getElementById('kmzInputMerge').addEventListener('change', async functi
         const url = URL.createObjectURL(kmzBlob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = "CombinedSanitized.kmz";
+        a.download = "MergedMapPublic.kmz";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+
+        // --- Output CombinedPositions.kmz with node positions ---
+        const outZip2 = new JSZip();
+        outZip2.file("combined.kml", positionsKMLOutput);
+        for (const [imgName, blob] of Object.entries(overlapImages)) {
+            outZip2.file(imgName, blob);
+        }
+        outZip2.file("DO_NOT_USE_AS_INPUT.flag", "This KMZ was generated as output and should not be used as input.");
+
+        const kmzBlob2 = await outZip2.generateAsync({ type: "blob" });
+        const url2 = URL.createObjectURL(kmzBlob2);
+        const a2 = document.createElement('a');
+        a2.href = url2;
+        a2.download = "MergedMapPrivate.kmz";
+        document.body.appendChild(a2);
+        a2.click();
+        document.body.removeChild(a2);
+        URL.revokeObjectURL(url2);
     } catch (err) {
         alert("An error occurred during merging: " + err);
     } finally {
