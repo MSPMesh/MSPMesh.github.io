@@ -106,17 +106,33 @@ document.getElementById('kmzInputMerge').addEventListener('change', async functi
                 const outImgData = outCtx.createImageData(width, height);
                 const outData = outImgData.data;
 
+                const countColorMap = [
+                    { count: 1, color: [255, 0, 0, 255] },      // Red
+                    { count: 2, color: [255, 128, 0, 255] },    // Orange
+                    { count: 3, color: [255, 255, 0, 255] },    // Yellow
+                    { count: 4, color: [128, 255, 0, 255] },    // Light Green
+                    { count: 5, color: [0, 255, 0, 255] },      // Green
+                ];
+
                 for (let y = 0; y < height; ++y) {
                     for (let x = 0; x < width; ++x) {
                         const idx = y * width + x;
                         const opaqueCount = alphaArrays.reduce((acc, arr) => acc + (arr[idx] === 255 ? 1 : 0), 0);
-                        let r = 0, g = 0, b = 0, a = 0;
-                        if (opaqueCount === 1) { r = 255; a = 255; }
-                        else if (opaqueCount === 2) { r = 255; g = 255; a = 255; }
-                        else if (opaqueCount >= 3) { g = 255; a = 255; }
+
+                        // Find the highest threshold <= opaqueCount
+                        let color = [0, 0, 0, 0];
+                        for (let i = countColorMap.length - 1; i >= 0; --i) {
+                            if (opaqueCount >= countColorMap[i].count) {
+                                color = countColorMap[i].color;
+                                break;
+                            }
+                        }
 
                         const px = idx * 4;
-                        outData[px] = r; outData[px + 1] = g; outData[px + 2] = b; outData[px + 3] = a;
+                        outData[px] = color[0];
+                        outData[px + 1] = color[1];
+                        outData[px + 2] = color[2];
+                        outData[px + 3] = color[3];
                     }
                 }
                 outCtx.putImageData(outImgData, 0, 0);

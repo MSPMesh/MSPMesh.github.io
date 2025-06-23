@@ -3,6 +3,20 @@ title: Jargon
 parent: Beginner Guides
 ---
 
+## Acronyms
+
+| Acronym | Meaning |
+|---------|---------|
+| LOS     | Line Of Sight |
+| ATCF    | As The Crow Flies |
+| AGL     | Above Ground Level |
+| HWT     | HeyWhatsThat - A website that creates Line Of Sight signal coverage maps |
+| 4631    | RAK's 4631 "WisBlock" node |
+| RAK150  | A completed node built around RAK's 150x75mm solar enclosure |
+| SNR     | Signal-to-Noise Ratio |
+| RSSI    | Received Signal Strength Indicator |
+| SWR     | Standing Wave Ratio |
+
 ## Definitions
 
 ### Shore Power
