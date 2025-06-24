@@ -1,0 +1,92 @@
+<form id='infoForm'>
+<label for='hardware_model'><strong>Hardware Model</strong><br>What node hardware model is it?</label><br>
+<input type='text' id='hardware_model' name='hardware_model' minlength='1' maxlength='64' value=''><br><br>
+<label for='notes'><strong>Notes</strong><br>Any additional notes about this node?</label><br>
+<input type='text' id='notes' name='notes' minlength='1' maxlength='256' value=''><br><br>
+<label for='node_role'><strong>Node Role</strong><br>What is the node&#x27;s role?</label><br>
+<select id='node_role' name='node_role'>
+<option value=''></option>
+<option value='Client'>Client</option>
+<option value='Client_Mute'>Client_Mute</option>
+<option value='Router'>Router</option>
+<option value='Router_Late'>Router_Late</option>
+</select><br><br>
+<label for='node_type'><strong>Node Type</strong><br>What type of node is it?</label><br>
+<select id='node_type' name='node_type'>
+<option value=''></option>
+<option value='Pocket'>Pocket</option>
+<option value='Desk'>Desk</option>
+<option value='House'>House</option>
+<option value='Vehicle'>Vehicle</option>
+<option value='Infra'>Infra</option>
+<option value='Sensor'>Sensor</option>
+</select><br><br>
+<label for='general_location'><strong>General Location</strong><br>What is the general location of this node?</label><br>
+<select id='general_location' name='general_location'>
+<option value=''></option>
+<option value='Central Metro'>Central Metro</option>
+<option value='North Metro'>North Metro</option>
+<option value='South Metro'>South Metro</option>
+<option value='West Metro'>West Metro</option>
+<option value='East Metro'>East Metro</option>
+<option value='Greater MN'>Greater MN</option>
+<option value='Mankato'>Mankato</option>
+<option value='Rochester'>Rochester</option>
+<option value='Red River Valley'>Red River Valley</option>
+<option value='Wisconsin'>Wisconsin</option>
+</select><br><br>
+<label for='location_set'><strong>Location Set</strong><br>Does the node have GPS enabled?</label><br>
+<select id='location_set' name='location_set'>
+<option value=''></option>
+<option value='GPS'>GPS</option>
+<option value='Static'>Static</option>
+<option value='No'>No</option>
+</select><br><br>
+<label for='power_source'><strong>Power Source</strong><br>How is the node powered?</label><br>
+<select id='power_source' name='power_source'>
+<option value=''></option>
+<option value='Shore'>Shore</option>
+<option value='Solar'>Solar</option>
+<option value='Battery'>Battery</option>
+</select><br><br>
+<label for='is_attended'><strong>Attended?</strong><br>Is this node attended (someone is always there to monitor it)?</label><br>
+<select id='is_attended' name='is_attended'><option value=''></option><option value='true'>Yes</option><option value='false'>No</option></select><br><br>
+<label for='antenna_above_roofline'><strong>Antenna Above Roofline?</strong><br>Is the antenna above the roofline?</label><br>
+<select id='antenna_above_roofline' name='antenna_above_roofline'><option value=''></option><option value='true'>Yes</option><option value='false'>No</option></select><br><br>
+<label for='antenna_dbi'><strong>Antenna dBi</strong><br>What is the antenna gain in dBi?</label><br>
+<input type='number' id='antenna_dbi' name='antenna_dbi' min='0' max='100' value=''><br><br>
+<label for='antenna_height'><strong>Antenna Height</strong><br>How high is the base of the antenna above sea level in feet? This can be found using google earth or similar tools.</label><br>
+<input type='number' id='antenna_height' name='antenna_height' min='600' max='2500' value=''><br><br>
+<input type='submit' value='Submit'>
+</form>
+
+<pre id='output' style='margin-top: 2em; background: #eee; padding: 1em;'></pre>
+<button id='copyBtn' style='display: none;'>Copy to Clipboard</button>
+
+
+<script>
+document.getElementById('infoForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = {};
+    for (const element of form.elements) {
+        if (!element.name || element.value === '') continue;
+        if (element.tagName === 'SELECT' && (element.value === 'true' || element.value === 'false')) {
+            data[element.name] = (element.value === 'true');
+        } else if (element.type === 'number') {
+            data[element.name] = Number(element.value);
+        } else {
+            data[element.name] = element.value;
+        }
+    }
+    const json = JSON.stringify(data);
+    const base64 = btoa(json);
+    document.getElementById('output').textContent = base64;
+    document.getElementById('copyBtn').style.display = 'inline';
+});
+
+document.getElementById('copyBtn').addEventListener('click', function() {
+    const text = document.getElementById('output').textContent;
+    navigator.clipboard.writeText(text);
+});
+</script>
