@@ -5,10 +5,10 @@ parent: Beginner Guides
 
 ## Why isn't My Node Working?
 Here are some common symptoms of a node that is not working properly:  
-  
-1) No nodes on your node list or map
-2) Can't receive messages from other nodes
-3) Can't send messages to other nodes (Max Retransmission Reached)
+    
+1) No nodes on your node list or map    
+2) Can't receive messages from other nodes    
+3) Can't send messages to other nodes (Max Retransmission Reached)    
 
 ### Can't see other nodes and not receiving messages
 If you can't see other nodes on your node list or map, and you can't receive messages from other nodes, it can be caused by a few different issues:
