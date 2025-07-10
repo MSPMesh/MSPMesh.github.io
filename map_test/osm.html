@@ -50,30 +50,43 @@
 
 <body>
     <div id="map"></div>
+    <!-- Overlay controls -->
+    <div
+        style="position:absolute;top:10px;right:10px;z-index:1000;background:white;padding:8px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+        <label>
+            <input type="checkbox" id="toggleOverlay" checked>
+            Show Overlay
+        </label>
+        <br>
+        <label>
+            Opacity:
+            <input type="range" id="overlayOpacity" min="0" max="1" step="0.01" value="0.3"
+                style="vertical-align:middle;">
+            <span id="opacityValue">0.3</span>
+        </label>
+        <br>
+        <label>
+            Map Style:
+            <select id="osmStyle">
+                <option value="https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png">Carto Light</option>
+                <option value="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png">OSM Standard</option>
+                <option value="https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png">Carto Dark</option>
+                <option value="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png">OpenTopoMap</option>
+            </select>
+        </label>
+    </div>
     <script>
         // initialize Leaflet
         var map = L.map('map').setView([44.97997, -93.26384], 10);
 
         // add the OpenStreetMap tiles
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
         }).addTo(map);
 
         // show the scale bar on the lower left corner
         L.control.scale({ imperial: true, metric: true }).addTo(map);
-
-        // List of image files in the format N44W094.png, N45W093.png, etc.
-        var imageFiles = [
-            'N44W093.png',
-            'N44W094.png',
-            'N44W095.png',
-            'N44W096.png',
-            'N45W093.png',
-            'N45W094.png',
-            'N45W095.png',
-            'N45W096.png',
-        ];
 
         // Helper to parse filename and return bounds
         function getBoundsFromFilename(filename) {
@@ -93,15 +106,83 @@
             return bounds;
         }
 
-        // Loop through files and add overlays
-        imageFiles.forEach(function (imageUrl) {
-            var bounds = getBoundsFromFilename(imageUrl);
-            if (bounds) {
-                L.imageOverlay(imageUrl, bounds, {
-                    opacity: 0.3,
-                    interactive: true
-                }).addTo(map);
+        // Store overlays for control
+        var overlays = [];
+        var defaultOpacity = 0.3;
+
+        // Fetch image file list from remote JSON and add overlays
+        fetch('https://raw.githubusercontent.com/MSPMesh/msp-mesh-splash-map/refs/heads/main/map_data/tiles.json')
+            .then(response => response.json())
+            .then(function (imageFiles) {
+                imageFiles.forEach(function (imageFile) {
+                    var bounds = getBoundsFromFilename(imageFile);
+                    if (bounds) {
+                        var imageUrl = 'https://raw.githubusercontent.com/MSPMesh/msp-mesh-splash-map/refs/heads/main/map_data/' + imageFile;
+                        var overlay = L.imageOverlay(imageUrl, bounds, {
+                            opacity: defaultOpacity,
+                            interactive: true
+                        });
+                        overlay.addTo(map);
+                        overlays.push(overlay);
+                    }
+                });
+            })
+            .catch(function (err) {
+                console.error('Failed to load image file list:', err);
+            });
+
+        // Overlay controls
+        var toggleOverlay = document.getElementById('toggleOverlay');
+        var overlayOpacity = document.getElementById('overlayOpacity');
+        var opacityValue = document.getElementById('opacityValue');
+
+        toggleOverlay.addEventListener('change', function () {
+            overlays.forEach(function (overlay) {
+                if (toggleOverlay.checked) {
+                    overlay.addTo(map);
+                } else {
+                    map.removeLayer(overlay);
+                }
+            });
+        });
+
+        overlayOpacity.addEventListener('input', function () {
+            var val = parseFloat(overlayOpacity.value);
+            opacityValue.textContent = val.toFixed(2);
+            overlays.forEach(function (overlay) {
+                overlay.setOpacity(val);
+            });
+        });
+
+        // Map style control
+        var tileLayer;
+        var styleSelect = document.getElementById('osmStyle');
+        var tileAttributions = {
+            "https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png":
+                '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png":
+                '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+            "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png":
+                '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png":
+                'Map data: &copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>, <a href="https://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+        };
+
+        function setTileLayer(url) {
+            if (tileLayer) {
+                map.removeLayer(tileLayer);
             }
+            tileLayer = L.tileLayer(url, {
+                maxZoom: 19,
+                attribution: tileAttributions[url] || ''
+            });
+            tileLayer.addTo(map);
+        }
+
+        setTileLayer(styleSelect.value);
+
+        styleSelect.addEventListener('change', function () {
+            setTileLayer(styleSelect.value);
         });
     </script>
 </body>
