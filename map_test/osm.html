@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        #map {
+            /* configure the size of the map */
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Leaflet crispness override */
+        .leaflet-container .leaflet-overlay-pane svg,
+        .leaflet-container .leaflet-marker-pane img,
+        .leaflet-container .leaflet-shadow-pane img,
+        .leaflet-container .leaflet-tile-pane img,
+        .leaflet-container img.leaflet-image-layer {
+            max-width: none !important;
+            /* Preserve crisp pixels with scaled up images */
+            image-rendering: optimizeSpeed;
+            /* Legal fallback */
+            image-rendering: -moz-crisp-edges;
+            /* Firefox        */
+            image-rendering: -o-crisp-edges;
+            /* Opera          */
+            image-rendering: -webkit-optimize-contrast;
+            /* Safari         */
+            image-rendering: optimize-contrast;
+            /* CSS3 Proposed  */
+            image-rendering: crisp-edges;
+            /* CSS4 Proposed  */
+            image-rendering: pixelated;
+            /* CSS4 Proposed  */
+            -ms-interpolation-mode: nearest-neighbor;
+            /* IE8+           */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <script>
+        // initialize Leaflet
+        var map = L.map('map').setView([44.97997, -93.26384], 10);
+
+        // add the OpenStreetMap tiles
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+        }).addTo(map);
+
+        // show the scale bar on the lower left corner
+        L.control.scale({ imperial: true, metric: true }).addTo(map);
+
+        // List of image files in the format N44W094.png, N45W093.png, etc.
+        var imageFiles = [
+            'N44W093.png',
+            'N44W094.png',
+            'N44W095.png',
+            'N44W096.png',
+            'N45W093.png',
+            'N45W094.png',
+            'N45W095.png',
+            'N45W096.png',
+        ];
+
+        // Helper to parse filename and return bounds
+        function getBoundsFromFilename(filename) {
+            // Example: N44W094.png
+            var match = filename.match(/^([NS])(\d+)([EW])(\d+)\.png$/i);
+            if (!match) return null;
+            var latSign = match[1] === 'N' ? 1 : -1;
+            var lat = latSign * parseInt(match[2], 10);
+            var lngSign = match[3] === 'E' ? 1 : -1;
+            var lng = lngSign * parseInt(match[4], 10);
+
+            // Each image covers 1x1 degree square, starting at (lat, lng) and ending at (lat+1, lng+1)
+            var southWest = [lat, lng];
+            var northEast = [lat + 1, lng + 1];
+
+            var bounds = L.latLngBounds(southWest, northEast);
+            return bounds;
+        }
+
+        // Loop through files and add overlays
+        imageFiles.forEach(function (imageUrl) {
+            var bounds = getBoundsFromFilename(imageUrl);
+            if (bounds) {
+                L.imageOverlay(imageUrl, bounds, {
+                    opacity: 0.3,
+                    interactive: true
+                }).addTo(map);
+            }
+        });
+    </script>
+</body>
+
+</html>
