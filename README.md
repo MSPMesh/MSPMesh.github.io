@@ -82,7 +82,7 @@ sudo apt install ruby-full build-essential zlib1g-dev
 ### Step 2: Set Up the Jekyll Site Locally  
 1. Clone the repository to your computer.  
 2. Open the project folder in **VSCode**.  
-3. Open the terminal in VSCode using `Ctrl+```.  
+3. Open the terminal in VSCode using `` Ctrl+Shift+` ``.
 4. Run the following commands in the terminal:
 
 ```bash
