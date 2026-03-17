@@ -24,4 +24,3 @@ This page is for acronyms and short explanations of meaning
 | GPIO    | General-Purpose Input/Output - Configurable pins on microcontrollers | | 
 | 4631    | RAK's 4631 "WisBlock" node | | 
 | RAK150  | A completed node built around RAK's 150x75mm solar enclosure | | 
-

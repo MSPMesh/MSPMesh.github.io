@@ -1,51 +1,45 @@
+[comment]: <> (This is a hacky way to leave a comment in markdown that won't show up in the final page)
+[comment]: <> (The focus of this readme is to get someone up to speed on how to contribute and contribution standards)
+
 # MSPMesh Documentation Wiki
 Welcome to the MSPMesh Documentation Wiki!  
 You can access the live site here: [https://mspmesh.github.io/](https://mspmesh.github.io/)
 
----
+## Purpose
+The purpose of this site is to collect the wisdom and knowledge that the MSPMesh community has accumulated over the years and present it in an easy to search and understand format.  
+In general we do not need to host information that already exists in other places on the internet, and should focus on information that is relevant to Minnesota and our mesh. 
 
-## Environment Setup  
-We recommend using **Visual Studio Code (VSCode)** to contribute to this wiki.  
-VSCode offers helpful features like Git integration, spell checking, syntax highlighting, and AI assistance.
-
----
 
 ## Contribution Standards  
 All changes and additions to this site should be submitted as a **GitHub Pull Request**.  
-*Note: Contribution standards are still being finalized. Stay tuned for updates!*
 
----
+[comment]: <> (TODO add more information here as it comes up)
+
+### AI usage
+Using AI to write is okay, as long as what is written is high quality and *not obviously written by AI*. People using this website will expect it to hold accurate and relevant information and if they see very clearly AI written articles it erodes trust in the contents.   
+The content that AI writes is often low quality because it does not have the context or wisdom that we have when it comes to creating a mesh in Minnesota. It typically generates pointlessly long winded and over-structured content that makes it difficult to quickly read a page.   
+I think that a mediocre page written by a person will always be better than a page written by AI
 
 ## Making a Basic Change and Submitting a Pull Request  
+To make a contribution to this site, you will need to fork this repo, make changes, and then create a pull request. Here is a great tutorial on how to do this:  
+https://www.youtube.com/watch?v=H2Hg8g0lWiE  
 
-Follow these steps to make a simple change to one of the markdown files and submit it for review using **Visual Studio Code**:
+Simple changes like information or spelling corrections can be made and submitted as a PR without needing to set up a local testing environment, but if you are making major changes to the site then you should build and preview the website locally before submitting a PR. 
 
-TODO - make a guide on how to fork the repo, make a branch, and make a PR
-
-[comment]: <> (A lot of this README was AI generated and of low quality, needs to be rewritten!)
 
 ## Previewing Pages Locally  
 Want to see how your changes look before submitting a pull request?  
-Follow these steps to set up and preview the site locally.
+We recommend using **Visual Studio Code (VSCode)** to contribute to this wiki.  
+VSCode offers helpful features like Git integration, spell checking, syntax highlighting, and AI assistance.  
 
-### Step 1: Install Ruby  
-Ruby is required to build and run the site locally. Follow the instructions below based on your operating system:
+This site uses:  
+* [Ruby](https://www.ruby-lang.org/en/): The programming language that Jekyll is written in.
+  * You do not need to know Ruby or how to program at all for this site. 
+* [Jekyll](https://jekyllrb.com/): A general purpose static website generator.  
+* [Just The Docs](https://github.com/just-the-docs/just-the-docs): A Jekyll theme made specifically to host wiki-like documentation. 
 
-#### macOS:
-```bash
-brew install ruby
-```
-
-#### Ubuntu/Debian:
-```bash
-sudo apt install ruby-full build-essential zlib1g-dev
-```
-
-#### Windows:
-1. Download and install [RubyInstaller](https://rubyinstaller.org/).  
-2. During installation, check the box for **"Add Ruby to PATH"**.
-
----
+### Step 1: Install Ruby
+You will need to install Ruby: https://www.ruby-lang.org/en/documentation/installation/  
 
 ### Step 2: Set Up the Jekyll Site Locally  
 1. Clone the repository to your computer.  
@@ -74,4 +68,4 @@ bundle exec jekyll serve
 
 ---
 
-Feel free to reach out if you encounter any issues or need help setting up your environment. Happy contributing!
+Feel free to reach out if you encounter any issues or need help setting up your environment
