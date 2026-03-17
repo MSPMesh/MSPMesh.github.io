@@ -20,41 +20,9 @@ All changes and additions to this site should be submitted as a **GitHub Pull Re
 
 Follow these steps to make a simple change to one of the markdown files and submit it for review using **Visual Studio Code**:
 
-1. **Clone the Repository**  
-   - Open **Visual Studio Code**.  
-   - Go to the **Source Control** tab (or press `Ctrl+Shift+G`).  
-   - Click **Clone Repository** and paste the repository URL:  
-     ```
-     https://github.com/MSPMesh/MSPMesh.github.io.git
-     ```
-   - Choose a folder on your computer where the repository will be cloned.  
+TODO - make a guide on how to fork the repo, make a branch, and make a PR
 
-2. **Create a New Branch**  
-   - In the **Source Control** tab, click the branch dropdown in the status bar (bottom-left corner of VSCode).  
-   - Select **Create New Branch** and enter a descriptive name for your branch (e.g., `fix-typo-readme`).  
-
-3. **Edit a Markdown File**  
-   - Open the project folder in **VSCode** (if not already open).  
-   - Locate the markdown file you want to edit (e.g., `README.md` or a file in the `tutorials` folder).  
-   - Make your changes using VSCode's editor. For example, you can fix typos, update content, or add new sections.  
-
-4. **Commit Your Changes**  
-   - Save your changes.  
-   - Go to the **Source Control** tab.  
-   - You will see your changes listed under **Changes**.  
-   - Add a commit message in the text box (e.g., "Fix typo in README") and click the checkmark icon to commit your changes.  
-
-5. **Push Your Changes**  
-   - After committing, click the **Sync Changes** button in the status bar (or use the **Source Control** tab).  
-   - VSCode will prompt you to publish your branch. Click **Publish Branch**.  
-
-6. **Create a Pull Request**  
-   - Once your branch is pushed, go to the [MSPMesh GitHub repository](https://github.com/MSPMesh/MSPMesh.github.io).  
-   - GitHub will detect your new branch and suggest creating a pull request. Click **Compare & pull request**.  
-   - Add a clear title and description for your pull request, explaining what changes you made and why.  
-   - Submit the pull request.  
-
----
+[comment]: <> (A lot of this README was AI generated and of low quality, needs to be rewritten!)
 
 ## Previewing Pages Locally  
 Want to see how your changes look before submitting a pull request?  
