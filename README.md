@@ -1,83 +1,45 @@
+[comment]: <> (This is a hacky way to leave a comment in markdown that won't show up in the final page)
+[comment]: <> (The focus of this readme is to get someone up to speed on how to contribute and contribution standards)
+
 # MSPMesh Documentation Wiki
 Welcome to the MSPMesh Documentation Wiki!  
 You can access the live site here: [https://mspmesh.github.io/](https://mspmesh.github.io/)
 
----
+## Purpose
+The purpose of this site is to collect the wisdom and knowledge that the MSPMesh community has accumulated over the years and present it in an easy to search and understand format.  
+In general we do not need to host information that already exists in other places on the internet, and should focus on information that is relevant to Minnesota and our mesh. 
 
-## Environment Setup  
-We recommend using **Visual Studio Code (VSCode)** to contribute to this wiki.  
-VSCode offers helpful features like Git integration, spell checking, syntax highlighting, and AI assistance.
-
----
 
 ## Contribution Standards  
 All changes and additions to this site should be submitted as a **GitHub Pull Request**.  
-*Note: Contribution standards are still being finalized. Stay tuned for updates!*
 
----
+[comment]: <> (TODO add more information here as it comes up)
+
+### AI usage
+Using AI to write is okay, as long as what is written is high quality and *not obviously written by AI*. People using this website will expect it to hold accurate and relevant information and if they see very clearly AI written articles it erodes trust in the contents.   
+The content that AI writes is often low quality because it does not have the context or wisdom that we have when it comes to creating a mesh in Minnesota. It typically generates pointlessly long winded and over-structured content that makes it difficult to quickly read a page.   
+I think that a mediocre page written by a person will always be better than a page written by AI
 
 ## Making a Basic Change and Submitting a Pull Request  
+To make a contribution to this site, you will need to fork this repo, make changes, and then create a pull request. Here is a great tutorial on how to do this:  
+https://www.youtube.com/watch?v=H2Hg8g0lWiE  
 
-Follow these steps to make a simple change to one of the markdown files and submit it for review using **Visual Studio Code**:
+Simple changes like information or spelling corrections can be made and submitted as a PR without needing to set up a local testing environment, but if you are making major changes to the site then you should build and preview the website locally before submitting a PR. 
 
-1. **Clone the Repository**  
-   - Open **Visual Studio Code**.  
-   - Go to the **Source Control** tab (or press `Ctrl+Shift+G`).  
-   - Click **Clone Repository** and paste the repository URL:  
-     ```
-     https://github.com/MSPMesh/MSPMesh.github.io.git
-     ```
-   - Choose a folder on your computer where the repository will be cloned.  
-
-2. **Create a New Branch**  
-   - In the **Source Control** tab, click the branch dropdown in the status bar (bottom-left corner of VSCode).  
-   - Select **Create New Branch** and enter a descriptive name for your branch (e.g., `fix-typo-readme`).  
-
-3. **Edit a Markdown File**  
-   - Open the project folder in **VSCode** (if not already open).  
-   - Locate the markdown file you want to edit (e.g., `README.md` or a file in the `tutorials` folder).  
-   - Make your changes using VSCode's editor. For example, you can fix typos, update content, or add new sections.  
-
-4. **Commit Your Changes**  
-   - Save your changes.  
-   - Go to the **Source Control** tab.  
-   - You will see your changes listed under **Changes**.  
-   - Add a commit message in the text box (e.g., "Fix typo in README") and click the checkmark icon to commit your changes.  
-
-5. **Push Your Changes**  
-   - After committing, click the **Sync Changes** button in the status bar (or use the **Source Control** tab).  
-   - VSCode will prompt you to publish your branch. Click **Publish Branch**.  
-
-6. **Create a Pull Request**  
-   - Once your branch is pushed, go to the [MSPMesh GitHub repository](https://github.com/MSPMesh/MSPMesh.github.io).  
-   - GitHub will detect your new branch and suggest creating a pull request. Click **Compare & pull request**.  
-   - Add a clear title and description for your pull request, explaining what changes you made and why.  
-   - Submit the pull request.  
-
----
 
 ## Previewing Pages Locally  
 Want to see how your changes look before submitting a pull request?  
-Follow these steps to set up and preview the site locally.
+We recommend using **Visual Studio Code (VSCode)** to contribute to this wiki.  
+VSCode offers helpful features like Git integration, spell checking, syntax highlighting, and AI assistance.  
 
-### Step 1: Install Ruby  
-Ruby is required to build and run the site locally. Follow the instructions below based on your operating system:
+This site uses:  
+* [Ruby](https://www.ruby-lang.org/en/): The programming language that Jekyll is written in.
+  * You do not need to know Ruby or how to program at all for this site. 
+* [Jekyll](https://jekyllrb.com/): A general purpose static website generator.  
+* [Just The Docs](https://github.com/just-the-docs/just-the-docs): A Jekyll theme made specifically to host wiki-like documentation. 
 
-#### macOS:
-```bash
-brew install ruby
-```
-
-#### Ubuntu/Debian:
-```bash
-sudo apt install ruby-full build-essential zlib1g-dev
-```
-
-#### Windows:
-1. Download and install [RubyInstaller](https://rubyinstaller.org/).  
-2. During installation, check the box for **"Add Ruby to PATH"**.
-
----
+### Step 1: Install Ruby
+You will need to install Ruby: https://www.ruby-lang.org/en/documentation/installation/  
 
 ### Step 2: Set Up the Jekyll Site Locally  
 1. Clone the repository to your computer.  
@@ -106,4 +68,4 @@ bundle exec jekyll serve
 
 ---
 
-Feel free to reach out if you encounter any issues or need help setting up your environment. Happy contributing!
+Feel free to reach out if you encounter any issues or need help setting up your environment

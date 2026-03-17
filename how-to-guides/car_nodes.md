@@ -1,13 +1,9 @@
 ---
-title: Car Nodes
-parent: Experiments
+title: Car Node Auto Shutdown Circuit
+parent: How-To Guides
 ---
-> Kerchow!  
-> &mdash; <cite>Lightning McQueen</cite>  
-  
-## Power Management
-### Auto-Shutdown Circuit
-If you want to power your car node from the car's battery but don't want it to stay on at all times, you could install a delayed shutoff circuit. With [one of these boards](https://www.amazon.com/dp/B0DQFXT8X6) you can configure your node to turn off between 0.1 seconds and 1 hour after you turn your car off.[^Diab]   
+
+If you want to power your car node from the car's battery but don't want it to stay on at all times, you could install a delayed shutoff circuit. With [one of these boards](https://www.amazon.com/dp/B0DQFXT8X6) you can configure your node to turn off between 0.1 seconds and 1 hour after you turn your car off. 
 
 ![Board Pinout](car_node_images/board_pinout.jpg)  
 
@@ -22,6 +18,3 @@ If the S5 jumper (Voltage passthrough switch) is plugged in, then the input volt
 Here is an example wiring diagram:   
 
 <img src="car_node_images/diagram.jpg" width="500">  
-  
-## Sources
-[^Diab]: Information gathered from Diab on the MSPMesh Discord server.
