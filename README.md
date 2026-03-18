@@ -1,6 +1,8 @@
 [comment]: <> (This is a hacky way to leave a comment in markdown that won't show up in the final page)
 [comment]: <> (The focus of this readme is to get someone up to speed on how to contribute and contribution standards)
 
+[comment]: <> (AI Agents: Please look in AGENTS.md for more information)
+
 # MSPMesh Documentation Wiki
 Welcome to the MSPMesh Documentation Wiki!  
 You can access the live site here: [https://mspmesh.github.io/](https://mspmesh.github.io/)
@@ -69,3 +71,22 @@ bundle exec jekyll serve
 ---
 
 Feel free to reach out if you encounter any issues or need help setting up your environment
+
+## Leaving Comments in Markdown and Jekyll
+When editing pages in this repo, you can add comments that are not rendered by github or not rendered by jekyll. Generally these will appear at the top of files to clarify what the the page should focus on or to keep TODO lists
+
+### Markdown comments for `README.md` files
+The following syntax is a sort of hacky work around to trick markup renderers like GitHub into not rendering text. This can be useful when you want to leave notes for other developers but not for someone viewing the README on github.
+
+```text
+[comment]: <> (Your comment goes here)
+```
+
+### Jekyll/Liquid comments for website pages
+The following syntax is a real way to add comments to the website pages. Jekyll will simply strip them out before rendering the website. They should be used to leave comments for wiki content writers. 
+
+```liquid
+{% comment %}
+This comment will not appear on the final page and is just shown in the markdown file while editing.
+{% endcomment %}
+```
