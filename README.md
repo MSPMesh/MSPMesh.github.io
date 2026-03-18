@@ -1,6 +1,8 @@
 [comment]: <> (This is a hacky way to leave a comment in markdown that won't show up in the final page)
 [comment]: <> (The focus of this readme is to get someone up to speed on how to contribute and contribution standards)
 
+[comment]: <> (AI Agents: Please look in AGENTS.md for more information)
+
 # MSPMesh Documentation Wiki
 Welcome to the MSPMesh Documentation Wiki!  
 You can access the live site here: [https://mspmesh.github.io/](https://mspmesh.github.io/)
